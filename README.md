@@ -1,5 +1,8 @@
 # vue-map-admin
 
+## 版本
+1.0.0
+
 ## Project setup
 ```
 npm install
