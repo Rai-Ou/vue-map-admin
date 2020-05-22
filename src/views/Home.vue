@@ -2,8 +2,8 @@
   <div class="home" style="height:100%">
     <div ref="container" id="container"></div>
     <div class="btn-group">
-      <div @click="open">开始编辑</div>
-      <div @click="close">结束编辑</div>
+      <div class="btn" @click="open">开始编辑</div>
+      <div class="btn" @click="close">结束编辑</div>
     </div>
   </div>
 </template>
@@ -80,9 +80,17 @@ export default {
       //   log.info("触发事件：removenode");
       // });
 
-      this.polyEditor.on("end", function(type, target) {
-        console.log(type);
-        console.log(target);
+      this.polyEditor.on("end", function(type) {
+        console.log(type.target.w.path);
+        this.$alert("这是一段内容", "标题名称", {
+          confirmButtonText: "确定",
+          callback: action => {
+            this.$message({
+              type: "info",
+              message: `action: ${action}`
+            });
+          }
+        });
         // event.target 即为编辑后的多边形对象
       });
     },
@@ -109,6 +117,16 @@ export default {
   position: fixed;
   bottom: 100px;
   right: 100px;
-  background: red;
+  background: #fff;
+  padding: 20px;
+  display: flex;
+  width: 180px;
+  justify-content: space-around;
+}
+.btn-group .btn {
+  color: royalblue;
+  padding: 10px;
+  border: 1px solid royalblue;
+  border-radius: 10px;
 }
 </style>
