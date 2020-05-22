@@ -1,5 +1,6 @@
 <template>
   <div class="home" style="height:100%">
+    <el-input type="textarea" v-model="info" :rows="5"></el-input>
     <div ref="container" id="container"></div>
     <div class="btn-group">
       <div class="btn" @click="open">开始编辑</div>
@@ -17,7 +18,8 @@ export default {
     return {
       map: null,
       polyEditor: null,
-      clientHeight: ""
+      clientHeight: "",
+      info: ""
     };
   },
   watch: {
@@ -33,6 +35,7 @@ export default {
 
   methods: {
     mapInit() {
+      let that = this;
       this.map = new AMap.Map("container", {
         resizeEnable: true,
         zoom: 14
@@ -82,15 +85,8 @@ export default {
 
       this.polyEditor.on("end", function(type) {
         console.log(type.target.w.path);
-        this.$alert("这是一段内容", "标题名称", {
-          confirmButtonText: "确定",
-          callback: action => {
-            this.$message({
-              type: "info",
-              message: `action: ${action}`
-            });
-          }
-        });
+        that.info = JSON.stringify(type.target.w.path);
+
         // event.target 即为编辑后的多边形对象
       });
     },
@@ -103,7 +99,7 @@ export default {
     changeFixed(clientHeight) {
       //动态修改样式
       console.log(clientHeight);
-      this.$refs.container.style.height = clientHeight + "px";
+      this.$refs.container.style.height = clientHeight - 100 + "px";
     }
   }
 };
